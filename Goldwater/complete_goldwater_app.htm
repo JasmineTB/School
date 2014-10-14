@@ -1,0 +1,1632 @@
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Survey Engine</title>
+    
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta content="none" name="robots"/>
+<meta http-equiv="imagetoolbar" content="no" />
+<link href="/vtc-resources/css/default.css" type="text/css" rel="stylesheet"/>
+<link href="/vtc-resources/css/print.css" type="text/css" rel="stylesheet" media="print"/>
+<link href="css/survey.css;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2" type="text/css" rel="stylesheet" />
+
+
+  <link href="/survey/realmResource.do;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2?type=screenCss" type="text/css" rel="stylesheet">
+  <link href="/survey/realmResource.do;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2?type=printCss" type="text/css" rel="stylesheet" media="print"/>
+
+
+<script src="js/survey.js;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2" language="JavaScript"></script>
+<script src="js/calendarPopup.js;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2" language="JavaScript"></script>
+<!--[if lt IE 6]>
+    <style type="text/css">
+    #content { 
+      width: 100%;
+      }
+    #oneColContent { 
+      width: 100%;
+      }
+    </style>
+    <![endif]-->
+<!-- the stuff below should only be included in supported browsers -->
+<link href="css/lightbox.css;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/lightbox_plus.js;jsessionid=51dd257c827181e4dbd24618fa9d4b8282220896ce234d9e8d27348d7fcd8c1a.e38Lc3qKb3qSc40MahuSe0.2"></script>
+<!--[if gte IE 6]>
+	<style type="text/css">
+	#overlay { 
+		filter:alpha(opacity=70);
+		}
+	</style>
+<![endif]-->
+
+<script language="JavaScript">
+  function popUp(url)
+  {
+    var newwindow;
+    newwindow=window.open(url,'Information','height=500px,width=600px,left=100,top=100,resizable=yes,directories=yes,toolbar=yes,location=yes,scrollbars=yes,status=true');
+    if (window.focus) {newwindow.focus()}
+  }
+  function populateChildren(ancestors, children, url) {
+    var parentValue = ancestors[0].options[ancestors[0].selectedIndex].value;
+    if (parentValue == null || parentValue == "") {
+      emptyChildren(children);
+      return true;
+    }
+    var url = url+'&parent0='+ parentValue;
+    for(var iter = 1; iter<ancestors.length; iter++) {
+      var parentQuestion = document.getElementById(ancestors[iter]);
+      parentValue = parentQuestion.options[parentQuestion.selectedIndex].value;
+      url = url+'&parent'+iter+'='+ parentValue;
+    }
+    
+    var http_request = false;
+    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+        http_request = new XMLHttpRequest();
+        if (http_request.overrideMimeType) {
+            http_request.overrideMimeType('text/xml');
+            // See note below about this line
+        }
+    } else if (window.ActiveXObject) { // IE
+        try {
+            http_request = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                http_request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+        }
+    }
+
+    if (!http_request) {
+        alert('Error: unable to populate drop downs.');
+        return false;
+    }
+    http_request.onreadystatechange = function() { AJAXResponse(parent, children, http_request); };
+    http_request.open('GET', url, true);
+    http_request.send(null);
+    
+  }
+  
+  function AJAXResponse(parent, children, http_request) {
+
+        if (http_request.readyState == 4) {
+            if (http_request.status == 200) {
+                
+               emptyChildren(children);
+                
+                var xmldoc = http_request.responseXML;
+                
+                if (window.ActiveXObject) {
+                  xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+                  xmldoc.async = false;
+                  xmldoc.loadXML(http_request.responseText);
+                }
+                
+                var child = children[0];
+                var root = xmldoc.getElementsByTagName('root').item(0);
+
+                for (var iNode = 0; iNode < root.childNodes.length; iNode++) {
+                  var dataBlock = root.childNodes.item(iNode);
+                  document.getElementById(child).options[iNode+1] = new Option(dataBlock.childNodes.item(1).firstChild.data+'', dataBlock.childNodes.item(0).firstChild.data+'');
+                }
+            } else {
+                alert('Error: unable to populate drop downs.  Status was = '+http_request.status);
+            }
+        }
+
+    }
+    
+    function emptyChildren(children) {
+        for(var iter = 0; iter<children.length; iter++) {
+          document.getElementById(children[iter]).selectedIndex = 0;
+          var i = 1;
+          while(i < document.getElementById(children[iter]).options.length) {
+            document.getElementById(children[iter]).options[i] = null;
+          }
+        }
+    }
+
+</script>
+  </head>
+  <body id="printPage">
+    
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+<div id = "survey-infoHeader">
+  <div id ="survey-infoHeader-appName">
+   
+     
+       
+     
+    
+     <b>Jasmine Brewer</b>
+    
+  </div>
+    
+  <div id ="survey-infoHeader-appAddress">
+   
+  </div>  
+    
+  <div id = "survey-infoHeader-assessName">
+    
+      
+       
+     
+     
+      <b>2014 Goldwater Scholarship</b>
+    
+   </div>
+</div>
+   
+     
+       
+     <h1>Student Profile</h1>
+     <div class="INSTR">
+
+				Use the correct combination of uppercase and lowercase letters when completing the application.
+				<br /><br />
+				To avoid losing data you have entered, frequently click the <span style="color:#A00233;">Save</span> button and always use the <span style="color:#A00233;">Logout</span> link to exit the application.  Do not use your browser’s forward or back buttons.
+				
+</div>
+<fieldset class="grouping questionWrapper indent15h2">
+<span class="wordingWrapperTXTHorizontal indent15h2Wording">
+<label id="questionId-266287484" for="TXTquestionId-266287484">1.  Date of birth (mm/dd/yyyy)</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent15h2InputDisplayWrapper">
+02/08/1993
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent5h2">
+<span class="wordingWrapperTXTHorizontal indent5h2Wording">
+<label id="questionId-266287485" for="TXTquestionId-266287485">2.  Age</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent5h2InputDisplayWrapper">
+20
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperMC indentMC2Wording">
+<label id="questionId-266287486" for="MCquestionId-266287486">3.  Gender</label>
+</div>
+<fieldset class="mcList indentMC2InputWrapper">
+<ul>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266287486" value="Female" id="choiceId-266287487" checked="checked" disabled  class="inputMC indentMC2Input" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266287487">Female</label>
+
+</div>
+</li>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266287486" value="Male" id="choiceId-266287488" disabled  class="inputMC indentMC2Input" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266287488">Male</label>
+
+</div>
+</li>
+</ul>
+</fieldset>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperSEL indentMC2Wording">
+<label id="questionId-266287489" for="SELquestionId-266287489">4.  State (or U.S. territory) of legal residence</label>
+</div>
+
+<div class="inputDisplayWrapperSEL  indentMC2InputDisplayWrapper">
+MT
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="INSTR">
+
+				You can enter your zip code to search for your U.S. Representative and the correlating Congressional District at <a href="http://www.house.gov" target="_blank">www.house.gov</a>.
+				<br /><br />
+				For item 5, select <span style="color;#A00233;">At-large</span> for all non-voting delegations:  &nbsp;American Samoa, District of Columbia, Guam, Puerto Rico, U.S. Virgin Islands.
+				
+</div>
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperSEL indentMC2Wording">
+<label id="questionId-266287547" for="SELquestionId-266287547">5.  Select the U.S. Congressional District for your legal residence.</label>
+</div>
+
+<div class="inputDisplayWrapperSEL  indentMC2InputDisplayWrapper">
+1st
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperTXT">
+<label id="questionId-266287602" for="TXTquestionId-266287602">6.  If your legal residence is not the same as your parents, please indicate how it has been established.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT ">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperMC indentMC2Wording">
+<label id="questionId-266287603" for="MCquestionId-266287603">7.  Citizenship</label>
+</div>
+<fieldset class="mcList indentMC2InputWrapper">
+<ul>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266287603" value="USCitizen" id="choiceId-266287604" checked="checked" disabled  class="inputMC indentMC2Input" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266287604">U.S. Citizen</label>
+
+</div>
+</li>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266287603" value="permanentResident" id="choiceId-266287605" disabled  class="inputMC indentMC2Input" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266287605">Permanent Resident (All permanent residents must send in a letter stating intent to become a U.S. citizen and a copy of their Permanent Resident Card.)</label>
+
+</div>
+</li>
+</ul>
+</fieldset>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperTXT">
+<label id="questionId-266287606" for="TXTquestionId-266287606">8a.  Permanent Home Phone</label>
+</div>
+
+<div class="inputDisplayWrapperTXT ">
+406-582-8118
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperTXT">
+<label id="questionId-266287607" for="TXTquestionId-266287607">8b.  Cell Phone</label>
+</div>
+
+<div class="inputDisplayWrapperTXT ">
+406-640-1916
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+For Statistical Purposes Only
+</div>
+<div class="INSTR">
+The ethnicity question below is for statistical purposes only and will not be viewed by the selection committee.
+</div>
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperSEL indentMC2Wording">
+<label id="questionId-266287610" for="SELquestionId-266287610">9.  Ethnicity</label>
+</div>
+
+<div class="inputDisplayWrapperSEL  indentMC2InputDisplayWrapper">
+White (not of Hispanic origin)
+</div>
+</fieldset><!-- end of questionWrapper -->
+
+<br /><br />
+
+     
+   
+     
+       
+     <h1>Schooling</h1>
+     <div class="INSTR">
+
+				Use the correct combination of uppercase and lowercase letters when completing the application.
+				<br /><br />
+				To avoid losing data that you enter:&nbsp;&nbsp;Do not use your browser's forward or back buttons; frequently click the <span style="color:#A00233;">Save</span> button; and always use the <span style="color:#A00233;">Logout</span> link on the navigation bar that is on the left side to exit.
+				
+</div>
+<fieldset class="grouping questionWrapper indent30h2">
+<span class="wordingWrapperTXTHorizontal indent30h2Wording">
+<label id="questionId-266287620" for="TXTquestionId-266287620">1.  How many credits does your school require for graduation?</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent30h2InputDisplayWrapper">
+128
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent30h2">
+<span class="wordingWrapperTXTHorizontal indent30h2Wording">
+<label id="questionId-266287621" for="TXTquestionId-266287621">2.  How many credits will you achieve as of January 1, 2014?</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent30h2InputDisplayWrapper">
+126
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent30h2">
+<span class="wordingWrapperTXTHorizontal indent30h2Wording">
+<label id="questionId-266287622" for="TXTquestionId-266287622">3.  How many credits do you plan to achieve for graduation?</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent30h2InputDisplayWrapper">
+170
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent35h2">
+<span class="wordingWrapperTXTHorizontal indent35h2Wording">
+<label id="questionId-266287623" for="TXTquestionId-266287623">4.  When do you expect to receive your baccalaureate degree?  (mm/yyyy)</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent35h2InputDisplayWrapper">
+05/2015
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="INSTR">
+
+				For item 5, <span style="color:#A00233;">sophomore</span> is defined as a student who plans two more years of full-time undergraduate study beginning September 2014.  <span style="color:#A00233;">Junior</span> is defined as a student who plans one more year of full-time undergraduate study beginning September 2014.
+				<br /><br />
+				Please note that your response to item 5 must be in agreement with the response given by your Goldwater Faculty Representative.
+				
+</div>
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperMC indentMC2Wording">
+<label id="questionId-266287625" for="MCquestionId-266287625">5.  According to the definition provided above, indicate whether you are a sophomore or junior.</label>
+</div>
+<fieldset class="mcList indentMC2InputWrapper">
+<ul>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266287625" value="scholarshipSophomore" id="choiceId-266287626" disabled  class="inputMC indentMC2Input" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266287626">Sophomore</label>
+
+</div>
+</li>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266287625" value="scholarshipJunior" id="choiceId-266287627" checked="checked" disabled  class="inputMC indentMC2Input" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266287627">Junior</label>
+
+</div>
+</li>
+</ul>
+</fieldset>
+</fieldset><!-- end of questionWrapper -->
+<div class="displayText">
+6.  Select your undergraduate major(s)
+</div>
+<fieldset class="grouping questionWrapper indentMC">
+<div class="wordingWrapperSEL indentMCWording">
+<label id="questionId-266287629" for="SELquestionId-266287629">6a.  Major 1</label>
+</div>
+
+<div class="inputDisplayWrapperSEL  indentMCInputDisplayWrapper">
+Engineering Physics
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC">
+<div class="wordingWrapperSEL indentMCWording">
+<label id="questionId-266288083" for="SELquestionId-266288083">6b.  Major 2</label>
+</div>
+
+<div class="inputDisplayWrapperSEL  indentMCInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC">
+<div class="wordingWrapperSEL indentMCWording">
+<label id="questionId-266288537" for="SELquestionId-266288537">6c.  Select the area that best represents your major(s).</label>
+</div>
+
+<div class="inputDisplayWrapperSEL  indentMCInputDisplayWrapper">
+Science
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperTXT">
+<label id="questionId-266288543" for="TXTquestionId-266288543">7.  What will be your area/field of specialization?</label>
+</div>
+
+<div class="inputDisplayWrapperTXT ">
+Mathematical Physics
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperTXT">
+<label id="questionId-266288544" for="TXTquestionId-266288544">8.  List your cumulative, unweighted GPA on a 4.00 scale for all undergraduate schools attended.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT ">
+3.94
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="INSTR">
+
+				<span style="color:#A00233;">Items 9a through 9f are required if you are currently enrolled at a two-year institution.</span> Indicate the four-year college or university that you plan to transfer to for the 2014&#150;2015 academic year.  In the order in which they appear below, select the state, city, name, and then the institution code for your four-year institution choice.
+				<br /><br />
+				If you cannot find your institution, please <a href="https://www.act.org/goldwater/contact.html" target="_blank">Contact Us</a>.
+				
+</div>
+<div class="displayText">
+9.  Institution you plan to transfer to if currently attending a two-year institution
+</div>
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288547" for="SELquestionId-266288547">9a.  Institution state</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288548" for="SELquestionId-266288548">9b.  Institution city</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288549" for="SELquestionId-266288549">9c.  Institution name</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="displayText">
+
+				<span style="font-weight:bold;">&nbsp;&nbsp;&nbsp;Only one option will render for item 9d; please select it.</span>
+				
+</div>
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288551" for="SELquestionId-266288551">9d.  Institution code</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indentMC">
+<span class="wordingWrapperYNHorizontal indentMCWording">
+<label id="questionId-266288552" for="YNquestionId-266288552">9e.  Have you applied?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indentMCInputWrapper">
+<input type="radio" class="inputYNHorizontal  indentMCInput" name="questionId-266288552" id="questionId-266288552Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288552Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indentMCInput" name="questionId-266288552" id="questionId-266288552No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288552No">No</label></div>
+</div><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indentMC">
+<span class="wordingWrapperYNHorizontal indentMCWording">
+<label id="questionId-266288553" for="YNquestionId-266288553">9f.  Have you been admitted?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indentMCInputWrapper">
+<input type="radio" class="inputYNHorizontal  indentMCInput" name="questionId-266288553" id="questionId-266288553Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288553Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indentMCInput" name="questionId-266288553" id="questionId-266288553No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288553No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC2">
+<div class="wordingWrapperMR indentMC2Wording">
+<label id="questionId-266288554" for="MRquestionId-266288554">10.  What is the highest degree you plan to pursue? (You may select more than one.)</label>
+</div>
+
+<fieldset class="mrList indentMC2InputWrapper">
+<ul>
+<li>
+<div class="checkboxOrRadio">
+<input type="checkbox" name="questionId-266288554" value="choiceId-266288555"  id="choiceId-266288555" disabled  class="inputMR indentMC2Input"/> 
+</div>
+<div class="checkboxOrRadioTxt"><label for="choiceId-266288555">M.D.</label>
+
+</div>
+</li>
+<li>
+<div class="checkboxOrRadio">
+<input type="checkbox" name="questionId-266288554" checked="checked"  value="choiceId-266288556"  id="choiceId-266288556" disabled  class="inputMR indentMC2Input"/> 
+</div>
+<div class="checkboxOrRadioTxt"><label for="choiceId-266288556">Ph.D.</label>
+
+</div>
+</li>
+</ul>
+</fieldset>
+<input type="hidden" name="questionId-266288554" value="dummy" /></fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent6v">
+<div class="wordingWrapperESY indent6vWording">
+<label id="questionId-266288557" for="ESYquestionId-266288557">10a.  If you have selected a combined M.D./Ph.D. degree, why is a medical degree necessary for you to achieve your research goals?</label>
+</div>
+
+<div class="inputDisplayWrapperESY  indent6vInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Career Goal
+</div>
+<div class="INSTR">
+
+				For item 11, please use the same format as provided in the following example.  Mirror the capitalization, punctuation, and sentence-fragment structure used in the example.
+				<br /><br />
+				Example:&nbsp;  <span style="color:#A00233;">Ph.D. in Molecular Biology. Conduct research in biomedical science and teach at the university level.</span>
+				
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288560" for="ESYquestionId-266288560">11.  In one or two sentences, describe your career goal (see example above).  This statement will be used in publications if you are selected as a scholar or honorable mention.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+Ph.D. in Mathematical Physics. Conduct research in theoretical high energy or plasma physics in a university or national laboratory setting.
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288561" for="ESYquestionId-266288561">12.  You may provide a more detailed description of your career goals.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+I intend to do Ph.D. research in quark matter and fundamental particle physics, or theoretical fusion energy, and am particularly interested in programs at MIT, Princeton, Stanford, and Caltech. I hope to do theoretical research in high energy physics at a university and teach at the university level, or work in theoretical fusion energy at one of the US Department of Energy's national laboratories.
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Educational Background
+</div>
+<div class="INSTR">
+
+				Beginning with your current college or university, list all schools attended in the last four years.  Include schools attended during summer or for special courses.  Also, list any significant college work completed more than four years ago.
+				<br /><br />
+				<span style="color:#A00233;">For items 13a through 13d:</span>&nbsp; In the order in which they appear below, select the state, city, name, and then the institution code for your <span style="color:#A00233;">current</span> college or university.
+				<br /><br />
+				List remaining schools beginning with the most recent.
+				<br /><br />
+				If you cannot find your institution, please <a href="https://www.act.org/goldwater/contact.html" target="_blank">Contact Us</a>.
+				
+</div>
+<div class="HDR2">
+Current College or University
+</div>
+<div class="displayText">
+13.  Provide the following information for your current institution.
+</div>
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288566" for="SELquestionId-266288566">13a.  Institution state</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+CO
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288567" for="SELquestionId-266288567">13b.  Institution city</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+Boulder
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288568" for="SELquestionId-266288568">13c.  Institution name</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+University of Colorado-Boulder
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="displayText">
+
+				<span style="font-weight:bold;">&nbsp;&nbsp;&nbsp;Only one option will render for item 13d; please select it.</span>
+				
+</div>
+<fieldset class="grouping questionWrapper indent11h">
+<span class="wordingWrapperSELHorizontal indent11hWording">
+<label id="questionId-266288570" for="SELquestionId-266288570">13d.  Institution code</label>
+</span>
+
+<span class="inputDisplayWrapperSELHorizontal  indent11hInputDisplayWrapper">
+126614
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indentMC">
+<div class="wordingWrapperMC indentMCWording">
+<label id="questionId-266288571" for="MCquestionId-266288571">13e.  Indicate institution type.</label>
+</div>
+<fieldset class="mcList indentMCInputWrapper">
+<ul>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266288571" value="2year" id="choiceId-266288572" disabled  class="inputMC indentMCInput" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266288572">2-year institution</label>
+
+</div>
+</li>
+<li>
+<div class="checkboxOrRadio">
+<input type="radio" name="questionId-266288571" value="4year" id="choiceId-266288573" checked="checked" disabled  class="inputMC indentMCInput" onclick="check(this)"/> </div>
+<div class="checkboxOrRadioTxt">
+<label for="choiceId-266288573">4-year institution</label>
+
+</div>
+</li>
+</ul>
+</fieldset>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent6v">
+<div class="wordingWrapperTXT indent6vWording">
+<label id="questionId-266288574" for="TXTquestionId-266288574">13f.  Dates attended (from...to...)</label>
+</div>
+
+<div class="inputDisplayWrapperTXT  indent6vInputDisplayWrapper">
+9/2011 - Present
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288575" for="TXTquestionId-266288575">13g.  Unweighted GPA on a 4.00 scale</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+3.94
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288576" for="TXTquestionId-266288576">13h.  Letter grade achieved</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+A
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288577" for="YNquestionId-266288577">13i.  Will a transcript be sent?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288577" id="questionId-266288577Yes" value="Y" checked disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288577Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288577" id="questionId-266288577No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288577No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent12v">
+<div class="wordingWrapperTXT indent12vWording">
+<label id="questionId-266288578" for="TXTquestionId-266288578">13i1.  If no to question 13i, explain.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT  indent12vInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288579" for="YNquestionId-266288579">13j.  Were these college courses taken during high school?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288579" id="questionId-266288579Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288579Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288579" id="questionId-266288579No" value="N" checked disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288579No">No</label></div>
+</div><!-- end of questionWrapper -->
+<div class="HDR2">
+Other Schools Attended
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288581" for="ESYquestionId-266288581">14.  College or university name (avoid abbreviations)</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+Montana State University
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288582" for="TXTquestionId-266288582">14a.  Location</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+Bozeman, MT
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288583" for="TXTquestionId-266288583">14b.  Dates attended</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+5/2012 - 7/2012
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288584" for="TXTquestionId-266288584">14c.  Unweighted GPA on a 4.00 scale</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+4.00
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288585" for="TXTquestionId-266288585">14d.  Letter grade achieved</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+A
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288586" for="YNquestionId-266288586">14e.  Will a transcript be sent?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288586" id="questionId-266288586Yes" value="Y" checked disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288586Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288586" id="questionId-266288586No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288586No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent12v">
+<div class="wordingWrapperTXT indent12vWording">
+<label id="questionId-266288587" for="TXTquestionId-266288587">14e1.  If no to question 14e, explain.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT  indent12vInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288588" for="YNquestionId-266288588">14f.  Were these college courses taken during high school?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288588" id="questionId-266288588Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288588Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288588" id="questionId-266288588No" value="N" checked disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288588No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288589" for="ESYquestionId-266288589">15.  College or university name (avoid abbreviations)</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288590" for="TXTquestionId-266288590">15a.  Location</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288591" for="TXTquestionId-266288591">15b.  Dates attended</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288592" for="TXTquestionId-266288592">15c.  Unweighted GPA on a 4.00 scale</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288593" for="TXTquestionId-266288593">15d.  Letter grade achieved</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288594" for="YNquestionId-266288594">15e.  Will a transcript be sent?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288594" id="questionId-266288594Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288594Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288594" id="questionId-266288594No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288594No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent12v">
+<div class="wordingWrapperTXT indent12vWording">
+<label id="questionId-266288595" for="TXTquestionId-266288595">15e1.  If no to question 15e, explain.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT  indent12vInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288596" for="YNquestionId-266288596">15f.  Were these college courses taken during high school?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288596" id="questionId-266288596Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288596Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288596" id="questionId-266288596No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288596No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288597" for="ESYquestionId-266288597">16.  College or university name (avoid abbreviations)</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288598" for="TXTquestionId-266288598">16a.  Location</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288599" for="TXTquestionId-266288599">16b.  Dates attended</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288600" for="TXTquestionId-266288600">16c.  Unweighted GPA on a 4.00 scale</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288601" for="TXTquestionId-266288601">16d.  Letter grade achieved</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288602" for="YNquestionId-266288602">16e.  Will a transcript be sent?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288602" id="questionId-266288602Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288602Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288602" id="questionId-266288602No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288602No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent12v">
+<div class="wordingWrapperTXT indent12vWording">
+<label id="questionId-266288603" for="TXTquestionId-266288603">16e1.  If no to question 16e, explain.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT  indent12vInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288604" for="YNquestionId-266288604">16f.  Were these college courses taken during high school?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288604" id="questionId-266288604Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288604Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288604" id="questionId-266288604No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288604No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288605" for="ESYquestionId-266288605">17.  College or university name (avoid abbreviations)</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288606" for="TXTquestionId-266288606">17a.  Location</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent10h">
+<span class="wordingWrapperTXTHorizontal indent10hWording">
+<label id="questionId-266288607" for="TXTquestionId-266288607">17b.  Dates attended</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent10hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288608" for="TXTquestionId-266288608">17c.  Unweighted GPA on a 4.00 scale</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19h">
+<span class="wordingWrapperTXTHorizontal indent19hWording">
+<label id="questionId-266288609" for="TXTquestionId-266288609">17d.  Letter grade achieved</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288610" for="YNquestionId-266288610">17e.  Will a transcript be sent?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288610" id="questionId-266288610Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288610Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288610" id="questionId-266288610No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288610No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent12v">
+<div class="wordingWrapperTXT indent12vWording">
+<label id="questionId-266288611" for="TXTquestionId-266288611">17e1.  If no to question 17e, explain.</label>
+</div>
+
+<div class="inputDisplayWrapperTXT  indent12vInputDisplayWrapper">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="grouping questionWrapper indent6v">
+<span class="wordingWrapperYNHorizontal indent6vWording">
+<label id="questionId-266288612" for="YNquestionId-266288612">17f.  Were these college courses taken during high school?</label>
+</span>
+
+<div class="inputWrapperYNHorizontal indent6vInputWrapper">
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288612" id="questionId-266288612Yes" value="Y" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288612Yes">Yes</label>
+ &nbsp; 
+<input type="radio" class="inputYNHorizontal  indent6vInput" name="questionId-266288612" id="questionId-266288612No" value="N" disabled  onclick="check(this)"/>&nbsp;&nbsp;<label for="questionId-266288612No">No</label></div>
+</div><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288613" for="ESYquestionId-266288613">18.  If more than four months elapsed between high school and entry into college, please specifically state your activities during that time.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+ &nbsp; 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Coursework
+</div>
+<div class="INSTR">
+For items 19a through 19g, courses must be listed by title, not by catalog number used by your institution.
+</div>
+<div class="HDR2">
+Currently Enrolled
+</div>
+<div class="displayText">
+19.  Courses in your major in which you are currently enrolled
+</div>
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288618" for="TXTquestionId-266288618">19a.  Course 1</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Electricity and Magnetism II
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288619" for="TXTquestionId-266288619">19b.  Course 2</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Quantum Mechanics I
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288620" for="TXTquestionId-266288620">19c.  Course 3</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Introduction to Plasma Physics
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288621" for="TXTquestionId-266288621">19d.  Course 4</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288622" for="TXTquestionId-266288622">19e.  Course 5</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288623" for="TXTquestionId-266288623">19f.  Course 6</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288624" for="TXTquestionId-266288624">19g.  Course 7</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR2">
+Will Enroll
+</div>
+<div class="displayText">
+20.  Courses in your major for which you will enroll
+</div>
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288627" for="TXTquestionId-266288627">20a.  Course 1</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Quantum Mechanics II
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288628" for="TXTquestionId-266288628">20b.  Course 2</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Thermodynamics and Statistical Mechanics
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288629" for="TXTquestionId-266288629">20c.  Course 3</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Nuclear and Particle Physics
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288630" for="TXTquestionId-266288630">20d.  Course 4</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Intermediate Math Physics I
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288631" for="TXTquestionId-266288631">20e.  Course 5</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Intermediate Math Physics II
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288632" for="TXTquestionId-266288632">20f.  Course 6</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Gravitational Theory
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288633" for="TXTquestionId-266288633">20g.  Course 7</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288634" for="TXTquestionId-266288634">20h.  Course 8</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288635" for="TXTquestionId-266288635">20i.  Course 9</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288636" for="TXTquestionId-266288636">20j.  Course 10</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288637" for="TXTquestionId-266288637">20k.  Course 11</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288638" for="TXTquestionId-266288638">20l.  Course 12</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288639" for="TXTquestionId-266288639">20m.  Course 13</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288640" for="TXTquestionId-266288640">20n.  Course 14</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+ &nbsp; 
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR2">
+Outside of Major
+</div>
+<div class="displayText">
+21.  Math, science, or engineering courses outside of major for which you are enrolled or plan to enroll
+</div>
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288643" for="TXTquestionId-266288643">21a.  Course 1</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Analysis I
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288644" for="TXTquestionId-266288644">21b.  Course 2</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Abstract Algebra I
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288645" for="TXTquestionId-266288645">21c.  Course 3</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Analysis II
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288646" for="TXTquestionId-266288646">21d.  Course 4</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Abstract Algebra II
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288647" for="TXTquestionId-266288647">21e.  Course 5</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Geometry of Curves and Surfaces
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288648" for="TXTquestionId-266288648">21f.  Course 6</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Complex Analysis
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent8h">
+<span class="wordingWrapperTXTHorizontal indent8hWording">
+<label id="questionId-266288649" for="TXTquestionId-266288649">21g.  Course 7</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent8hInputDisplayWrapper">
+Partial Differential Equations I
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Awards, Honors, Scholarships
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288651" for="ESYquestionId-266288651">22.  List any awards, honors, and/or scholarships you have received.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+Presidential Scholar, University of Colorado at Boulder<br />
+<br />
+College of Engineering and Applied Science Merit Scholar<br />
+<br />
+Engineering Honors Program Member, University of Colorado at Boulder<br />
+<br />
+NSF Research Experience for Undergraduates Grant Recipient<br />
+<br />
+Undergraduate Research Opportunities Program Grant Recipient, University of Colorado at Boulder<br />
+<br />
+Discovery Learning Apprenticeship Program Grant Recipient, University of Colorado at Boulder College of Engineering and Applied Science<br />
+<br />
+College of Engineering and Applied Science Dean's List Recognition<br />
+
+</div>
+</fieldset><!-- end of questionWrapper -->
+
+<br /><br />
+
+     
+   
+     
+       
+     <h1>Programs and Activities</h1>
+     <div class="INSTR">
+
+				Use the correct combination of uppercase and lowercase letters when completing the application.
+				<br /><br />
+				To avoid losing data you have entered, frequently click the <span style="color:#A00233;">Save</span> button and always use the <span style="color:#A00233;">Logout</span> link to exit the application.  Do not use your browser’s forward or back buttons.
+				
+</div>
+<div class="HDR">
+Research Activities
+</div>
+<div class="INSTR">
+List past and present research activities associated with your interests in mathematics, science, or engineering in which you regularly participate. Explain the duration, degree, and significance of your involvement, including what responsibilities you had in the project. In the absence of formal research experience, describe briefly any other skills or accomplishments, i.e., posters, presentations, publications, etc., significant and relevant to this application.
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288655" for="ESYquestionId-266288655">1.  Research activities</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+Computational Hydrodynamics and Nuclear Theory<br />
+April 2013 - Present, 10-15 hours/week<br />
+Dr. Paul Romatschke, University of Colorado – Boulder<br />
+<br />
+The Nuclear Theory group is focused on the theoretical study of quarks and gluons in nuclear collisions, quark-gluon plasmas, and neutron stars, with particular emphasis on relativistic hydrodynamics and the fluid properties of quark-gluon plasma. I am writing hydrodynamic simulations of a strongly-interacting cold quantum fluid, the unitary Fermi gas, based on a discrete fluid dynamics method known for its superior handling of strongly-interacting fluids. These simulations are of standalone interest in the study of unitary Fermi gases, and fit into the Nuclear Theory group because of similarities with quark-gluon plasmas. I am currently fitting simulation results with analytical solutions and experimental data. In the future I hope to simulate nuclear collisions and quark-gluon plasmas and to contribute to the development of efficient algorithms in relativistic hydrodynamics. <br />
+<br />
+Liquid Crystal Materials Research Center <br />
+August 2012 - May 2013, 10-15 hours/week<br />
+Dr. Ivan Smalyukh, University of Colorado – Boulder<br />
+<br />
+The Smalyukh group is interested in the self-assembly of particles in liquid crystal into stable micro- and nano-materials whose properties can be controlled by experimental conditions. I researched the interactions between micrometer-sized particles dispersed in liquid crystal. Particles in a liquid crystal field deform the continuous alignment of liquid crystal molecules and cause topological defect structures with higher energy than the continuous field. These defects cause particles either to attract of repel. The strength and range of these types of interactions can be used to analyze the energetic characteristics of these topological defects, and determine the effectiveness of self-assembly of these types of particles. I am a coauthor on a publication ([1]) being submitted to Physical Review Letters on this topic. In addition to conducting experiments and analyzing data for this paper, I also developed a strong interest in theoretical topology while doing research in this group, and became involved in writing simulations of liquid crystal dynamics. <br />
+<br />
+Optical Remote Sensing Laboratory<br />
+May - August of 2012 and 2013, 40 hours/week<br />
+Dr. Joseph Shaw, Montana State University – Bozeman<br />
+<br />
+The Optical Remote Sensing Laboratory is involved in infrared cloud detection for optical earth-space communication and artic climate science. In 2013 I was involved in zero-emissions research, and am a coauthor on a paper in preparation ([2]) demonstrating the use of airborne imagers to detect leaks at vegetated CO2 sequestration sites. I designed a set of quantitative image analysis algorithms that determine the orientation of the airborne imager relative to the ground from image data and do automated data processing. In 2012 I contributed to the lab’s Aurora detection network by designing an optoelectronic system based on photodiodes (instead of photomultiplier tubes) to detect the Aurora.<br />
+<br />
+[1]. M.B. Pandey, T. Porenta, J. Brewer, A. Burkhart, S. Zumer, and Ivan I. Smalyukh. “Chirality-mediated symmetry breaking and self-assembly of dipolar nematic colloids with tangential surface anchoring”.<br />
+<br />
+[2]. Joseph A. Shaw, Paul W. Nugent, Sean Nicolaysen, and Jasmine Brewer. “Balloon-borne multispectral imaging of vegetation to detect CO2 gas leaking from underground”.
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Other Activities
+</div>
+<div class="INSTR">
+
+				List activities in which you have participated at your school, such as clubs, publications, debating, dramatics, music, art, and student government. List in order of importance to you.
+				
+</div>
+<div class="INSTR">
+
+				Note: &nbsp;We suggest you use a columnar format with the following labels: College Activity, Dates Participated, Offices Held
+				
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288659" for="ESYquestionId-266288659">2.  College activities</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+Engineering Honors Program, Fall 2011 - Present<br />
+Math and Physics Tutoring, Fall 2013 - Present<br />
+Colorado Space Grant Consortium, Fall 2011 - Spring 2012<br />
+Society of Physics Students, Spring 2012 - Present<br />
+University of Colorado Symphonic Band, Spring 2011<br />
+University of Colorado Jazz Combos, Spring 2011<br />
+University of Colorado Latin Jazz Ensemble, Fall 2012<br />
+University of Colorado Percussion Ensemble, Spring 2011 - Fall 2012<br />
+
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Professional Aspirations
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288661" for="ESYquestionId-266288661">3.  What are your professional aspirations? Indicate which area(s) of mathematics, science, or engineering you are considering making your career and specify how your current academic program and your overall educational plans will assist you in achieving this goal.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+I am pursuing a research career in mathematical physics. I am interested in PhD programs in theoretical high energy and plasma physics at MIT and Princeton. Following a postdoctoral position, I hope to become a researcher at a university or national laboratory. My academic choices reflect my research interests in physics and my fascination with mathematics. I am enrolled in a graduate-level plasma physics course this semester, and plan to take Nuclear and Particle Physics and two semesters of graduate Mathematical Physics. Although I will not obtain a degree in mathematics because I do not have the time to complete the liberal arts core, I intend to complete the mathematics degree curriculum. I believe that a strong mathematical background will be centrally important to a career in theoretical physics, and furthermore that the deductive creativity that proof-based mathematics encourages will continue to improve the way I think and solve problems in all analytic endeavors. 
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Motivation for Research Career in Math, Science, or Engineering
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288663" for="ESYquestionId-266288663">4.  Describe an activity or experience that has been important in clarifying or strengthening your motivation for a research career in science, mathematics, or engineering.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+My experience in the Liquid Crystal Materials Research Center strengthened my resolve to pursue a career in scientific research. I found the freedom and challenge of solving real problems very rewarding, and became deeply invested in understanding the theoretical and mathematical context of my results. I particularly enjoyed writing simulations, because they gave me a chance to understand the correlation between the theoretical background of the discipline and what was observed in experiment. I worked with a graduate student in the group to simulate the formation of interesting structures like topological defects and quasi-particles in liquid crystal, which were often observed in the lab. I enjoyed the process of exploring new ways to use theoretical and computational methods to inform our experiments, and found it exciting to consider the physics behind our observations. I discovered that the process of continually hypothesizing, testing, and revising was appealing to me.
+</div>
+</fieldset><!-- end of questionWrapper -->
+<div class="HDR">
+Personal Information
+</div>
+<fieldset class="grouping questionWrapper">
+<div class="wordingWrapperESY">
+<label id="questionId-266288665" for="ESYquestionId-266288665">5.  Goldwater Scholars will be representative of the diverse economic, ethnic, and occupational backgrounds of families in the United States. Describe any characteristics or other personal information about yourself or your family that you wish to share with the selection committee.</label>
+</div>
+
+<div class="inputDisplayWrapperESY ">
+In almost all of my endeavors I have found myself a female in heavily male-dominated fields. I am a physicist, a mathematician, a drummer, a skateboarder, and I play hacky sack. These experiences have positively impacted the way I understand my environment and myself because they have encouraged me to look beyond my gender to develop and clarify an identity based on my interests and sense-of-self. I believe that this identity allows me to interact more genuinely with the people around me and has made me more adaptable to strange circumstances and environments. This versatility is an asset to my approach to problem-solving in the sciences and mathematics.
+</div>
+</fieldset><!-- end of questionWrapper -->
+
+<br /><br />
+
+     
+   
+     
+       
+     <h1>Recommenders</h1>
+     <div class="INSTR">
+
+				<span style="color:#A00233;">Before completing this section, contact your</span> <a href="https://www.act.org/goldwater/gfacrep.html"  target="_blank">Goldwater Faculty Representative</a> <span style="color:#A00233;">for further instructions.</span>
+				<br /><br />
+				List names, email addresses,  positions, and institutions of three people who know enough about you to assess your personal characteristics, motivation, and potential for a career in mathematics, the natural sciences, or engineering. See <a href="https://www.act.org/goldwater/apply/pdf/yyinfo.pdf"  target="_blank">Candidacy Information and Instructions</a> for further details.
+				<br /><br />
+				Email addresses must be provided so recommenders can be notified to complete the online recommendation.  Be certain that you enter each recommender's email address correctly.  Within 24 hours from the time you provide the recommender's email address, your recommender should receive an email from the Goldwater Scholarship Program with instructions for completing the online recommendation.
+				
+</div>
+<fieldset class="grouping questionWrapper indent14h2">
+<span class="wordingWrapperTXTHorizontal indent14h2Wording">
+<label id="questionId-266288667" for="TXTquestionId-266288667">1.  First recommender</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent14h2InputDisplayWrapper">
+Dr. Paul Romatschke
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288668" for="TXTquestionId-266288668">1a.  First recommender's email</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+paul.romatschke@colorado.edu
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288669" for="TXTquestionId-266288669">1b.  First recommender's position</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+Assistant Professor
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288670" for="TXTquestionId-266288670">1c.  First recommender's institution</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+University of Colorado at Boulder
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent14h2">
+<span class="wordingWrapperTXTHorizontal indent14h2Wording">
+<label id="questionId-266288671" for="TXTquestionId-266288671">2.  Second recommender</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent14h2InputDisplayWrapper">
+Dr. Ivan Smalyukh
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288672" for="TXTquestionId-266288672">2a.  Second recommender's email</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+ivan.smalyukh@colorado.edu
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288673" for="TXTquestionId-266288673">2b.  Second recommender's position</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+Assistant Professor
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288674" for="TXTquestionId-266288674">2c.  Second recommender's institution</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+University of Colorado at Boulder
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent14h2">
+<span class="wordingWrapperTXTHorizontal indent14h2Wording">
+<label id="questionId-266288675" for="TXTquestionId-266288675">3.  Third recommender</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent14h2InputDisplayWrapper">
+Dr. Joseph Shaw
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288676" for="TXTquestionId-266288676">3a.  Third recommender's email</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+jshaw@ece.montana.edu
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288677" for="TXTquestionId-266288677">3b.  Third recommender's position</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+Professor
+</span>
+</fieldset><!-- end of questionWrapper -->
+<fieldset class="grouping questionWrapper indent19p25h">
+<span class="wordingWrapperTXTHorizontal indent19p25hWording">
+<label id="questionId-266288678" for="TXTquestionId-266288678">3c.  Third recommender's institution</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent19p25hInputDisplayWrapper">
+Montana State University
+</span>
+</fieldset><!-- end of questionWrapper -->
+
+<br /><br />
+
+     
+   
+     
+       
+     <h1>Certification and Release</h1>
+     <div class="CERT">
+
+				I affirm that I am applying for a Barry Goldwater Scholarship. Permission is hereby given to officials of my institution to release transcripts of my academic record and other requested information for consideration in the Barry Goldwater Scholarship Program. I understand that this application will be available only to qualified people who need to see it in the course of their duties.
+				<br /><br />
+				I affirm that I plan to pursue a research career in mathematics, the natural sciences, or engineering, as defined and discussed in this application.
+				<br /><br />
+				I affirm that the information contained herein is true and accurate to the best of my knowledge and belief.
+				<br /><br />
+				I agree that my name, current institution, career goals, and state of legal residence may be publicly announced by the Foundation should I be awarded a scholarship or be named as an honorable mention.
+				
+</div>
+<div class="displayText">
+By entering my name below, I officially indicate my agreement and give my consent to the above terms and conditions of the Barry Goldwater Scholarship Program. 
+</div>
+<fieldset class="grouping questionWrapper indent18h2">
+<span class="wordingWrapperTXTHorizontal indent18h2Wording">
+<label id="questionId-266288681" for="TXTquestionId-266288681">Signature of applicant (type name)</label>
+</span>
+
+<span class="inputDisplayWrapperTXTHorizontal  indent18h2InputDisplayWrapper">
+Jasmine Brewer
+</span>
+</fieldset><!-- end of questionWrapper -->
+<div id="subMessage"><div class="INSTR">
+
+				Click the <span style="color:#A00233;">Review</span> button below when you are ready to submit your application; follow the submission instructions on that page.  There you will be able to review your completed application for accuracy, print a copy for your records, and submit your application.  When your submission is successful, you will get an on-screen confirmation message.						
+				
+</div>
+</div>
+<br /><br />
+
+     
+   
+   
+    
+		<style type="text/css">
+			#subMessage {
+				display:none;
+			}
+		</style>
+		
+  </body>
+</html>
